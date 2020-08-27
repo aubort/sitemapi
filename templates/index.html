@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col"><div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Status
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="./?is_active=1">Active</a>
+      <a class="dropdown-item" href="./?is_active=0">Inactive</a>
+      <a class="dropdown-item" href="./?is_active=-1">All</a>
+    </div>
+  </div></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job['id'] }}</td>
+                    <td><a href="{{ job['loc'] }}" target="_blank">{{ job['title'] }}</a></td>
+                    <td>
+                      {% if job['is_active'] == 1 %}
+                        <span class="badge badge-success">Active</span></td>
+                      {% else %}
+                        <span class="badge badge-light">Closed</span>
+                      {% endif %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% endblock %}

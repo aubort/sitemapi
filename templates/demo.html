@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+<script src="/static/tmpl.min.js"></script>
+
+
+<!-- Main card deck from Bootstrap -->
+<div class="card-deck" id="card-deck"></div>
+
+<script>
+
+    // With the help of: https://medium.com/@imorobebh/javascript-fetch-synchronous-or-asynchronous-fd24f8ba6129
+
+    let getRandomJobs = async (url) => {
+      let response = await fetch(url);
+      let result = await response.json();
+
+      document.getElementById('card-deck').innerHTML = tmpl('tmpl-card', result);
+    }
+
+    getRandomJobs('/api/jobs/random');
+</script>
+
+
+<!-- https://github.com/blueimp/JavaScript-Templates -->
+<script type="text/x-tmpl" id="tmpl-card">
+{% raw %}
+
+{% for (var i=0; i<o.length; i++) { %}
+
+    <div class="card">
+    <img src="http://lorempixel.com/400/200/" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{%=o[i].title%}</h5>
+      <p class="card-text">This is a short description of the first few sentences of the job posting...</p>
+
+    </div>
+    <div class="card-footer bg-white border-0">
+      <a href="{%=o[i].loc%}" class="btn btn-primary" target="_blank">Apply now!</a>
+    </div>
+  </div>
+{% } %}
+
+{% endraw %}
+
+</script>
+
+{% endblock %}
